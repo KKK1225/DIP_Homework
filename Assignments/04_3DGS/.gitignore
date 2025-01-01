@@ -1,0 +1,8 @@
++# .gitignore file content
++# Ignore all files in data/chair except the images folder
++data/chair/*
++!data/chair/images/
++
++# Ignore all files in data/lego except the images folder
++data/lego/*
++!data/lego/images/
