@@ -84,8 +84,8 @@ python train.py --colmap_dir data/chair --checkpoint_dir data/chair/checkpoints
 ```
 
 We select the results of the last five time points to show:
-![image](https://github.com/zhengyuxiang/3DGS/blob/main/Assignments/04_3DGS/result_chair/epoch_0195/r_86.png)
-![image](https://github.com/zhengyuxiang/3DGS/blob/main/Assignments/04_3DGS/result_chair/epoch_0196/r_86.png)
-![image](https://github.com/zhengyuxiang/3DGS/blob/main/Assignments/04_3DGS/result_chair/epoch_0197/r_86.png)
-![image](https://github.com/zhengyuxiang/3DGS/blob/main/Assignments/04_3DGS/result_chair/epoch_0198/r_86.png)
-![image](https://github.com/zhengyuxiang/3DGS/blob/main/Assignments/04_3DGS/result_chair/epoch_0199/r_86.png)
+<img src="result_chair/epoch_0195/r_86.png" alt="alt text" width="800">
+<img src="result_chair/epoch_0196/r_86.png" alt="alt text" width="800">
+<img src="result_chair/epoch_0197/r_86.png" alt="alt text" width="800">
+<img src="result_chair/epoch_0198/r_86.png" alt="alt text" width="800">
+<img src="result_chair/epoch_0199/r_86.png" alt="alt text" width="800">
