@@ -1,6 +1,7 @@
 import gradio as gr
 import cv2
 import numpy as np
+import math
 
 # Function to convert 2x3 affine matrix to 3x3 for matrix multiplication
 def to_3x3(affine_matrix):
@@ -14,8 +15,30 @@ def apply_transform(image, scale, rotation, translation_x, translation_y, flip_h
     # Pad the image to avoid boundary issues
     pad_size = min(image.shape[0], image.shape[1]) // 2
     image_new = np.zeros((pad_size*2+image.shape[0], pad_size*2+image.shape[1], 3), dtype=np.uint8) + np.array((255,255,255), dtype=np.uint8).reshape(1,1,3)
-    image_new[pad_size:pad_size+image.shape[0], pad_size:pad_size+image.shape[1]] = image
-    image = np.array(image_new)
+    new_image = np.zeros((pad_size*2+image.shape[0], pad_size*2+image.shape[1], 3), dtype=np.uint8) + np.array((255,255,255), dtype=np.uint8).reshape(1,1,3)
+
+    # boost scale
+    image = cv2.resize(image, (int(image.shape[1] * scale), int(image.shape[0] * scale)), interpolation=cv2.INTER_LINEAR)      
+
+    # rotation and translation
+    center = (image_new.shape[0] // 2 - translation_y  // 10 * 3, image_new.shape[1] // 2 + translation_x  // 10 * 3)  # 旋转中心
+    for i in range(0, image.shape[0]):
+        for j in range(0, image.shape[1]):
+            x = round(math.cos(rotation/180*math.pi)*(i - image.shape[0] // 2) + math.sin(rotation/180*math.pi)*(j - image.shape[1] // 2))
+            y = round(math.sin(-rotation/180*math.pi)*(i - image.shape[0] // 2) + math.cos(rotation/180*math.pi)*(j - image.shape[1] // 2))
+            image_new[x+center[0], y+center[1]] = image[i, j]
+
+    # image_new[size_x+translation_y:size_x+image.shape[0]+translation_y, size_y+translation_x:size_y+image.shape[1]+translation_x] = image
+
+    # flip_horizontal
+    if flip_horizontal:
+        for i in range(image_new.shape[0]):
+            for j in range(image_new.shape[1]):
+                new_image[image_new.shape[0] - 1 -i, image_new.shape[1] - 1 -j] = image_new[i,j]
+        image = np.array(new_image)
+    else:
+        image = np.array(image_new)
+    
     transformed_image = np.array(image)
 
     ### FILL: Apply Composition Transform 
